@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import re
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -115,16 +116,38 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        pattern = """(^\w+)((?:\s+\w+=[^\s]+)+)?"""
+        m = re.match(pattern, args)
+        args = [k for k in m.groups() if k] if m else []
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        className = args[0]
+        if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+        kwargs= dict()
+        if len(args) > 1:
+            params = args[1].split(" ")
+            paramz = []
+            for j in params:
+                if j != '':
+                    paramz.append(j)
+            for param in paramz:
+                [key, value] = param.split("=")
+                if value[0] == '"' and value[-1] == '"':
+                    value = value[1:-1].replace('_', ' ')
+                elif '.' in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+                kwargs[key] = value
+        if len(kwargs) != 0:
+            new_instance = HBNBCommand.classes[className]()
+            for key, val in kwargs.items():
+                setattr(new_instance, key, val)
+            storage.save()
+            print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
