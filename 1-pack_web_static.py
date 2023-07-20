@@ -16,5 +16,5 @@ def do_pack():
               filename))
 
         return "versions/web_static_{}.tgz".format(filename)
-    except exception as e:
+    except Exception as e:
         return None
