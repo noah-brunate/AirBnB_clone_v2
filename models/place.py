@@ -2,6 +2,7 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from models.review import Review
+from models.amenity import Amenity
 from sqlalchemy import Column, Float, String, Table, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 import os
@@ -17,7 +18,6 @@ if stored == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    stored = os.environ.get('HBNB_TYPE_STORAGE')
     if stored == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)

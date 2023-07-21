@@ -3,7 +3,6 @@
 from models.base_model import BaseModel, Base
 from os import environ
 from sqlalchemy import Column, String, Integer, ForeignKey
-from models.place import Place
 from models.user import User
 
 
