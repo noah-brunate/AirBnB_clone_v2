@@ -12,7 +12,8 @@ app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def myFunc():
+def hello():
+    """Returns a given string"""
     return (“Hello HBNB!”)
 
 
