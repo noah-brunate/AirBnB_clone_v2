@@ -6,18 +6,17 @@ from sqlalchemy.orm import relationship
 import os
 
 
-stored = os.environ.get('HBNB_TYPE_STORAGE')
-if stored == 'db':
-    from models.place import place_amenity
+stored = os.getenv('HBNB_TYPE_STORAGE')
 
 class Amenity(BaseModel, Base):
     """Amenity Class """
 
-    stored = os.environ.get('HBNB_TYPE_STORAGE')
-    __tablename__ = 'amenities'
     if stored == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
-        place_amenities = relationship("Place", secondary=place_amenity, back_populates="amenities")
     else:
         name = ""
+
+    def __init__(self, *args, **kwargs):
+        """initializes Amenity"""
+        super().__init__(*args, **kwargs)

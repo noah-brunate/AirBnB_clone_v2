@@ -7,20 +7,22 @@ from sqlalchemy.orm import relationship
 import os
 
 
-store_type = os.getenv('HBNB_TYPE_STORAGE')
+store = os.environ.get('HBNB_TYPE_STORAGE')
 
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-    if store_type == 'db':
+
+    if store == 'db':
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state', cascade="all, delete")
     else:
+        name = ''
         @property
         def cities(self):
             """Getter attribute"""
-            from models import storage
+            from models.__init__ import storage
             list_cities = []
             for city in storage.all(City).values():
                 if city.state_id == self.id:

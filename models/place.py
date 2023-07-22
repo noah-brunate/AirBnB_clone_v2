@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
+from models.__init__ import storage
 from models.review import Review
 from models.amenity import Amenity
 from sqlalchemy import Column, Float, String, Table, Integer, ForeignKey
@@ -20,8 +21,6 @@ class Place(BaseModel, Base):
     """ A place to stay """
     if stored == 'db':
         __tablename__ = 'places'
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
         number_rooms = Column(Integer, nullable=False, default=0)
@@ -31,8 +30,10 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
         amenity_ids = []
+        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         reviews = relationship('Review', cascade='all, delete-orphan', backref='place')
-        amenities = relationship('Amenity', secondary=place_amenity, viewonly=False)
+        amenities = relationship('Amenity', secondary='place_amenity', backref="place_amenities", viewonly=False)
     else:
         city_id = ""
         user_id = ""
@@ -57,8 +58,6 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            from models import storage
-            from models.amenity import Amenity
             amenities = []
             all_amenities = storage.all(Amenity)
             for key, amenity_obj in all_amenities.items():
