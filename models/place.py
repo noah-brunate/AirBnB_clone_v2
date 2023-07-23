@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+import models
 from models.base_model import BaseModel, Base
-from models.__init__ import storage
 from models.review import Review
 from models.amenity import Amenity
 from sqlalchemy import Column, Float, String, Table, Integer, ForeignKey
@@ -19,6 +19,7 @@ if stored == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
+    __tablename__ = 'places'
     if stored == 'db':
         __tablename__ = 'places'
         name = Column(String(128), nullable=False)
@@ -50,7 +51,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             reviews = []
-            all_reviews = storage.all(Review)
+            all_reviews = models.storage.all(Review)
             for key, review_obj in all_reviews.items():
                 if review_obj.place_id == self.id:
                     reviews.append(review_obj)
@@ -59,7 +60,7 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             amenities = []
-            all_amenities = storage.all(Amenity)
+            all_amenities = models.storage.all(Amenity)
             for key, amenity_obj in all_amenities.items():
                 if amenity_obj.id in self.amenity_ids:
                     amenities.append(amenity_obj)
