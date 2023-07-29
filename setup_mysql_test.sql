@@ -1,4 +1,4 @@
---script that prepares a MySQL server for user hbnb_test
+-- script that prepares a MySQL server for user hbnb_test
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 -- creating new user named : hbnb_test with all privileges on the db hbnb_test_db
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';

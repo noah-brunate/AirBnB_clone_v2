@@ -11,7 +11,6 @@ import os
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     stored = os.environ.get('HBNB_TYPE_STORAGE')
-    __tablename__ = 'users'
     if stored == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)

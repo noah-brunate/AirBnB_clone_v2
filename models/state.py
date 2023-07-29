@@ -12,7 +12,6 @@ store = os.environ.get('HBNB_TYPE_STORAGE')
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = 'states'
     if store == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)

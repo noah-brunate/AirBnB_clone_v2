@@ -10,7 +10,6 @@ stored = os.getenv('HBNB_TYPE_STORAGE')
 
 class Amenity(BaseModel, Base):
     """Amenity Class """
-    __tablename__ = 'amenities'
     if stored == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)

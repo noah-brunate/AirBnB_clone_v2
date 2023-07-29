@@ -1,5 +1,5 @@
---scrit that prepares a MySQL server for
---user hbnb_dev
+-- scrit that prepares a MySQL server for
+-- user hbnb_dev
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 -- creating new user named : hbnb_dev with all privileges on the db hbnb_dev_db
 CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
