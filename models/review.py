@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 """ Review module for the HBNB project """
-from models.base_model import BaseModel, Base
 import models
+from models.base_model import BaseModel, Base
 from os import getenv
+import sqlalchemy
 from sqlalchemy import Column, String, Integer, ForeignKey
 
 
 class Review(BaseModel, Base):
     """ Review classto store review information """
+    __tablename__ = 'reviews'
     if models.store_type == "db":
         __tablename__ = 'reviews'
         text = Column(String(1024), nullable=False)

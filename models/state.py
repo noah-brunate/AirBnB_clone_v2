@@ -12,16 +12,18 @@ store = os.environ.get('HBNB_TYPE_STORAGE')
 
 class State(BaseModel, Base):
     """ State class """
+    __tablename__ = 'states'
     if store == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state', cascade="all, delete")
     else:
         name = ''
+
         @property
         def cities(self):
             """Getter attribute"""
-            from models.__init__ import storage
+            from models import storage
             list_cities = []
             for city in storage.all(City).values():
                 if city.state_id == self.id:

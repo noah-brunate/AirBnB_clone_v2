@@ -11,6 +11,7 @@ store = os.environ.get('HBNB_TYPE_STORAGE')
 
 class City(BaseModel, Base):
     """ The city class, contains state ID and name """
+    __tablename__ = 'cities'
     if store == 'db':
         __tablename__ = 'cities'
         name = Column(String(128), nullable=False)

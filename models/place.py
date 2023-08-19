@@ -19,6 +19,7 @@ if stored == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
+    __tablename__ = 'places'
     if stored == 'db':
         __tablename__ = 'places'
         name = Column(String(128), nullable=False)
